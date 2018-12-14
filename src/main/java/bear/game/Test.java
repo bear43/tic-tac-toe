@@ -1,5 +1,6 @@
 package bear.game;
 
+import bear.game.Game.GameContainer;
 import org.newdawn.slick.*;
 
 public class Test

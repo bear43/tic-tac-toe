@@ -1,4 +1,4 @@
-package bear.game.Figure;
+package bear.game.Game.Figure;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
@@ -14,6 +14,11 @@ public class Ou extends FigureSkeleton
     public Ou(float radius)
     {
         this(0.0f, 0.0f, radius);
+    }
+
+    public Ou(float centerX, float centerY)
+    {
+        this(centerX, centerY, DEFAULT_RADIUS);
     }
 
     public Ou(float centerX, float centerY, float radius)
@@ -37,16 +42,22 @@ public class Ou extends FigureSkeleton
     @Override
     public void draw(Graphics graphics)
     {
-        flush();
+        update();
         graphics.draw(circle);
     }
 
     @Override
-    public void flush()
+    public void update()
     {
         circle.setCenterX(centerX);
         circle.setCenterY(centerY);
         circle.setRadius(radius);
+    }
+
+    @Override
+    public float getDefaultSize()
+    {
+        return DEFAULT_RADIUS;
     }
 
     public float getRadius()

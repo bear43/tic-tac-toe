@@ -1,4 +1,4 @@
-package bear.game.Figure;
+package bear.game.Game.Figure;
 
 public abstract class FigureSkeleton implements Figure
 {
@@ -30,5 +30,19 @@ public abstract class FigureSkeleton implements Figure
     {
         this.centerX = centerX;
         this.centerY = centerY;
+    }
+
+    @Override
+    public Object clone()
+    {
+        try
+        {
+            return super.clone();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

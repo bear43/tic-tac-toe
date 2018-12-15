@@ -1,4 +1,4 @@
-package bear.game.Game;
+package bear.game.Game.Interface;
 
 import org.newdawn.slick.Graphics;
 

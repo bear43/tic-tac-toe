@@ -13,11 +13,21 @@ public class Hach extends FigureSkeleton
 
     private float size = DEFAULT_SIZE;
 
+    private float sizeX = size;
+
+    private float sizeY = size;
+
+    private float halfSizeX;
+
+    private float halfSizeY;
+
     private float halfSize = size/2.0f;
 
     private void getHalfSize()
     {
         halfSize = size/2.0f;
+        halfSizeX = sizeX/2.0f;
+        halfSizeY = sizeY/2.0f;
     }
 
     @Override
@@ -38,8 +48,8 @@ public class Hach extends FigureSkeleton
     public void update()
     {
         getHalfSize();
-        firstLine.set(centerX-halfSize, centerY-halfSize, centerX+halfSize, centerY+halfSize);
-        secondLine.set(centerX+halfSize, centerY-halfSize, centerX-halfSize, centerY+halfSize);
+        firstLine.set(centerX-sizeX, centerY-sizeY, centerX+sizeX, centerY+sizeY);
+        secondLine.set(centerX+sizeX, centerY-sizeY, centerX-sizeX, centerY+sizeY);
     }
 
     @Override
@@ -69,5 +79,14 @@ public class Hach extends FigureSkeleton
         this.size = size;
         this.firstLine = new Line(0.0f, 0.0f, size, size);
         this.secondLine = new Line(size, size, 0.0f, 0.0f);
+    }
+
+    public Hach(float centerX, float centerY, float sizeX, float sizeY)
+    {
+        super(centerX, centerY);
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        this.firstLine = new Line(0.0f, 0.0f, sizeX, sizeY);
+        this.secondLine = new Line(sizeX, sizeY, 0.0f, 0.0f);
     }
 }

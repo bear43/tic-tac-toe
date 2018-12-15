@@ -1,6 +1,12 @@
 package bear.game.Game;
 
+import bear.game.Game.Event.Event;
+import bear.game.Game.Event.EventHandler;
+import bear.game.Game.Event.Mouse.EventContainer;
+import bear.game.Game.Event.Mouse.MouseButton;
+import bear.game.Game.Event.Mouse.MousePressed;
 import bear.game.Game.Field.Field;
+import bear.game.Game.Field.FieldLeftMouseHandler;
 import bear.game.Game.Figure.Figure;
 import bear.game.Game.Figure.FigureType;
 import bear.game.Game.Figure.Hach;
@@ -12,13 +18,9 @@ import org.newdawn.slick.SlickException;
 
 public class GameContainer extends BasicGame
 {
-    private Field field = new Field();
+    private Field field;
 
-    private Figure currentFigure = new Hach();
-
-    private FigureContainer haches = new FigureContainer();
-
-    private FigureContainer ous = new FigureContainer();
+    private Figure currentFigure;
 
     private static float gameWidth;
 
@@ -30,15 +32,21 @@ public class GameContainer extends BasicGame
 
     private static final int FPS_LIMIT = 60;
 
+    private EventContainer mousePressedEvent = new MousePressed();
+
     public void init(org.newdawn.slick.GameContainer gameContainer) throws SlickException
     {
+        field = Field.getFieldInstance();
         gameWidth = gameContainer.getWidth();
         gameHeight = gameContainer.getHeight();
         field.update();
+        currentFigure = new Hach(0, 0, gameWidth/Field.getFieldInstance().getCellCount(), gameHeight/Field.getFieldInstance().getCellCount());
         currentFigure.update();
         gameContainer.setTargetFrameRate(FPS_LIMIT);
         input = gameContainer.getInput();
         FigureContainer.addDefaultFigure(currentFigure);
+        EventHandler handler = new FieldLeftMouseHandler();
+        mousePressedEvent.addEvent(handler.toString(), handler);
 
     }
 
@@ -52,17 +60,8 @@ public class GameContainer extends BasicGame
         {
             if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
             {
-                if(currentFigure.getFigureType() == FigureType.X)
-                {
-                    haches.addFigure((Figure)currentFigure.clone());
-                    currentFigure = new Ou(mouse[0], mouse[1]);
-                }
-                else
-                {
-                    ous.addFigure((Figure)currentFigure.clone());
-                    currentFigure = new Hach(mouse[0], mouse[1]);
-                }
-                FigureContainer.getDefFigures().set(0, currentFigure);
+                mousePressedEvent.startEvent(this, new Object[]{MouseButton.LEFT, mouse[0], mouse[1], currentFigure});
+                currentFigure = FigureContainer.getDefFigures().get(0);
             }
         }
         catch (Exception ex)
@@ -77,7 +76,6 @@ public class GameContainer extends BasicGame
         currentFigure.setCenterX(mouse[0]);
         currentFigure.setCenterY(mouse[1]);
         FigureContainer.drawAllFigures(graphics);
-
     }
 
     public GameContainer()

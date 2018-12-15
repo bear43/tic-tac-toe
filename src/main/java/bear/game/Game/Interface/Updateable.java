@@ -1,4 +1,4 @@
-package bear.game.Game;
+package bear.game.Game.Interface;
 
 public interface Updateable
 {

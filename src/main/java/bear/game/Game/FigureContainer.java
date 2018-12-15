@@ -4,6 +4,7 @@ import bear.game.Game.Exceptions.FigureLimitExceededException;
 import bear.game.Game.Exceptions.FigureNotFoundException;
 import bear.game.Game.Figure.Figure;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Shape;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -15,6 +16,8 @@ public class FigureContainer
     private static List<Figure> defFigures = new CopyOnWriteArrayList<>();
 
     private static List<List<Figure>> figuresList = new CopyOnWriteArrayList<>();
+
+    private static List<Shape> shapeList = new CopyOnWriteArrayList<>();
 
     private static final int MAX_FIGURES = 9;
 
@@ -101,6 +104,7 @@ public class FigureContainer
     public static void drawAllFigures(Graphics graphics)
     {
         figuresList.forEach((x) -> x.forEach((y) -> y.draw(graphics)));
+        shapeList.forEach(graphics::draw);
     }
 
     public static List<Figure> getDefFigures()
@@ -111,5 +115,20 @@ public class FigureContainer
     public static void setDefFigures(List<Figure> defFigures)
     {
         FigureContainer.defFigures = defFigures;
+    }
+
+    public static void addShapeFigure(Shape figure)
+    {
+        shapeList.add(figure);
+    }
+
+    public static boolean removeShapeFigure(Shape figure)
+    {
+        return shapeList.remove(figure);
+    }
+
+    public static boolean removeShapeFigure(int index)
+    {
+        return shapeList.remove(index) != null;
     }
 }
